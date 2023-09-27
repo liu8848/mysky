@@ -1,0 +1,20 @@
+server:
+  port: 8020
+spring:
+  datasource:
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/sky_take_out
+      username: root
+      password: sudalu929
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+sky:
+  jwt:
+    admin-secret-key: itcast
+    admin-ttl: 7200000
+    admin-token-name: token
