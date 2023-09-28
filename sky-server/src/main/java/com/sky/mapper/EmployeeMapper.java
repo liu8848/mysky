@@ -7,4 +7,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface EmployeeMapper extends BaseMapper<Employee> {
     Employee getByUsername(String username);
+
+    int insert(Employee employee);
 }

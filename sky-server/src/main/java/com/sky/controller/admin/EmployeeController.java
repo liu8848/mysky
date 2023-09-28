@@ -1,6 +1,8 @@
 package com.sky.controller.admin;
 
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.sky.constant.JwtClaimsConstant;
+import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeeLoginDTO;
 import com.sky.entity.Employee;
 import com.sky.properties.JwtProperties;
@@ -8,6 +10,9 @@ import com.sky.result.Result;
 import com.sky.service.EmployeeService;
 import com.sky.utils.JwtUtil;
 import com.sky.vo.EmployeeLoginVO;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +26,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/admin/employee")
 @Slf4j
+@Tag(name = "员工相关服务")
 public class EmployeeController {
 
     @Autowired
@@ -29,7 +35,11 @@ public class EmployeeController {
     private JwtProperties jwtProperties;
 
     @PostMapping("/login")
-    public Result<EmployeeLoginVO> login(@RequestBody EmployeeLoginDTO employeeLoginDTO){
+    @Operation(summary = "员工登陆方法")
+    @ApiOperationSupport(author = "qzliu")
+    public Result<EmployeeLoginVO> login(@RequestBody
+                                          @Parameter(name = "登陆传输的用户数据格式")
+                                             EmployeeLoginDTO employeeLoginDTO){
         log.info("员工登陆：{}",employeeLoginDTO);
 
         Employee employee = employeeService.login(employeeLoginDTO);
@@ -47,10 +57,23 @@ public class EmployeeController {
                 .token(token)
                 .build();
         return Result.success(employeeLoginVO);
+
     }
 
     @PostMapping("/logout")
     public Result<String> logout(){
+        return Result.success();
+    }
+
+
+    @PostMapping
+    @ApiOperationSupport(author = "qzliu")
+    @Operation(summary = "添加员工")
+    public Result addEmployee(@RequestBody
+                                      @Parameter(name = "新增的用户信息对象")
+                                      EmployeeDTO employeeDTO){
+
+        employeeService.addEmployee(employeeDTO);
         return Result.success();
     }
 }

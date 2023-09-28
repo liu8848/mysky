@@ -25,7 +25,7 @@
     <mybatis.version>3.5.3.2</mybatis.version>
     <lombook.version>1.18.28</lombook.version>
     <druid3.version>1.2.19</druid3.version>
-    <knife4j.versioon>3.0.3</knife4j.versioon>
+    <knife4j.versioon>4.3.0</knife4j.versioon>
     <jwt.version>0.9.1</jwt.version>
   </properties>
 
@@ -52,9 +52,10 @@
 
       <dependency>
         <groupId>com.github.xiaoymin</groupId>
-        <artifactId>knife4j-spring-boot-starter</artifactId>
-        <version>${knife4j.versioon}</version>
+        <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
+        <version>4.3.0</version>
       </dependency>
+
 
       <dependency>
         <groupId>io.jsonwebtoken</groupId>

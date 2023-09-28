@@ -1,13 +1,18 @@
 package com.sky.result;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.io.Serializable;
 
 @Data
+@Schema(description = "响应体的数据结构")
 public class Result<T> implements Serializable {
+    @Schema(description = "响应状态码")
     private Integer code;
+    @Schema(description = "响应的信息")
     private String msg;
+    @Schema(description = "返回的数据信息模型")
     private T data;
 
     public static <T> Result<T> success(){
