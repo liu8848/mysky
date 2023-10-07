@@ -1,6 +1,7 @@
 package com.sky.interceptor;
 
 import com.sky.constant.JwtClaimsConstant;
+import com.sky.context.BaseContext;
 import com.sky.exception.BaseException;
 import com.sky.properties.JwtProperties;
 import com.sky.utils.JwtUtil;
@@ -34,6 +35,10 @@ public class JwtTokenAdminInterceptor implements HandlerInterceptor {
             Claims claims= JwtUtil.parseJWT(jwtProperties.getAdminSecretKey(),token);
             Long empId=Long.valueOf(claims.get(JwtClaimsConstant.EMP_ID).toString());
             log.info("当前员工id:{}",empId);
+
+            //ThreadLocal记录当前用户信息
+            BaseContext.setCurrentId(empId);
+
             return true;
         }catch (Exception ex){
             throw new BaseException(ex.getMessage());

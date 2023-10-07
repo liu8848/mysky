@@ -40,3 +40,10 @@ knife4j:
   setting:
     language: zh_cn
     swagger-model-name: 实体类列表
+
+
+pagehelper:
+#  params: pageNum=pageNumKey;pageSize=pageSizeKey;
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
