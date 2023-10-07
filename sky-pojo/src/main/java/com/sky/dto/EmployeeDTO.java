@@ -19,7 +19,7 @@ public class EmployeeDTO implements Serializable {
 
     @Schema(description = "电话号码")
     private String phone;
-    
+
     @Schema(description = "性别")
     private String sex;
 

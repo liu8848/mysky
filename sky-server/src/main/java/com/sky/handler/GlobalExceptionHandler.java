@@ -13,18 +13,18 @@ import java.sql.SQLIntegrityConstraintViolationException;
 @Slf4j
 public class GlobalExceptionHandler {
     @ExceptionHandler
-    public Result exceptionHandler(BaseException ex){
-        log.error("异常信息：{}",ex.getMessage());
+    public Result exceptionHandler(BaseException ex) {
+        log.error("异常信息：{}", ex.getMessage());
         return Result.error(ex.getMessage());
     }
 
     @ExceptionHandler
-    public Result exceptionHandler(SQLIntegrityConstraintViolationException ex){
-        String msg=ex.getMessage();
-        if(msg.contains("Duplicate entry")){
+    public Result exceptionHandler(SQLIntegrityConstraintViolationException ex) {
+        String msg = ex.getMessage();
+        if (msg.contains("Duplicate entry")) {
             String[] split = msg.split(" ");
-            String username=split[2];
-            String message=username+ MessageConstant.ALREADY_EXIST;
+            String username = split[2];
+            String message = username + MessageConstant.ALREADY_EXIST;
             return Result.error(message);
         }
         return Result.error(MessageConstant.UNKNOWN_ERROR);

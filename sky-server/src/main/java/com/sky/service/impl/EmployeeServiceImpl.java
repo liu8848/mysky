@@ -32,21 +32,21 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeMapper employeeMapper;
 
     @Override
-    public Employee login(EmployeeLoginDTO employeeLoginDTO){
-        String username=employeeLoginDTO.getUsername();
-        String password= DigestUtils.md5DigestAsHex(employeeLoginDTO.getPassword().getBytes());
+    public Employee login(EmployeeLoginDTO employeeLoginDTO) {
+        String username = employeeLoginDTO.getUsername();
+        String password = DigestUtils.md5DigestAsHex(employeeLoginDTO.getPassword().getBytes());
 
         Employee employee = employeeMapper.getByUsername(username);
 
-        if(employee==null){
+        if (employee == null) {
             throw new AccountNotFoundException(MessageConstant.ACCOUNT_NOT_FOUND);
         }
 
-        if(!password.equals(employee.getPassword())){
+        if (!password.equals(employee.getPassword())) {
             throw new PasswordErrorException(MessageConstant.PASSWORD_ERROR);
         }
 
-        if(employee.getStatus() == StatusConstant.DISABLE){
+        if (employee.getStatus() == StatusConstant.DISABLE) {
             throw new AccountLockedException(MessageConstant.ACCOUNT_LOCKED);
         }
 
@@ -57,9 +57,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void addEmployee(EmployeeDTO employeeDTO) {
 
-        Employee employee=new Employee();
+        Employee employee = new Employee();
 
-        BeanUtils.copyProperties(employeeDTO,employee);
+        BeanUtils.copyProperties(employeeDTO, employee);
 
         employee.setStatus(StatusConstant.ENABLE);
         employee.setPassword(DigestUtils.md5DigestAsHex(PasswordConstant.DEFAULT_PASSWORD.getBytes()));
@@ -70,7 +70,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         int rows = employeeMapper.insert(employee);
 
-        if(rows<1){
+        if (rows < 1) {
             throw new BaseException("添加失败！");
         }
 
@@ -82,9 +82,35 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         Page<Employee> page = employeeMapper.pageQuery(employeePageQueryDTO);
 
-        long total =page.getTotal();
+        long total = page.getTotal();
         List<Employee> records = page.getResult();
 
-        return new PageResult(total,records);
+        return new PageResult(total, records);
+    }
+
+    @Override
+    public void startOrStop(Integer status, Long id) {
+        Employee employee = new Employee();
+        employee.setId(id);
+        employee.setStatus(status);
+
+        employeeMapper.update(employee);
+    }
+
+    @Override
+    public Employee getById(Long id) {
+        return employeeMapper.getById(id);
+    }
+
+
+    @Override
+    public void update(EmployeeDTO employeeDTO) {
+        Employee employee=new Employee();
+        BeanUtils.copyProperties(employeeDTO,employee);
+
+        employee.setUpdateTime(LocalDateTime.now());
+        employee.setUpdateUser(BaseContext.getCurrentId());
+
+        employeeMapper.update(employee);
     }
 }

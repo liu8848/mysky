@@ -1,5 +1,6 @@
 package com.sky.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class Employee implements Serializable {
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
     private Long id;
     private String username;
     private String name;
@@ -23,9 +24,10 @@ public class Employee implements Serializable {
     private String idNumber;
     private Integer status;
 
-//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm")
     private LocalDateTime createTime;
 
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm")
     private LocalDateTime updateTime;
 
     private Long createUser;

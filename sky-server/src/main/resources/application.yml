@@ -43,7 +43,7 @@ knife4j:
 
 
 pagehelper:
-#  params: pageNum=pageNumKey;pageSize=pageSizeKey;
+  #  params: pageNum=pageNumKey;pageSize=pageSizeKey;
   helper-dialect: mysql
   reasonable: true
   support-methods-arguments: true
